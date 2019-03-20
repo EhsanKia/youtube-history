@@ -1,1 +1,41 @@
-foobar
+<!DOCTYPE html>
+<html lang="en" ng-app="YoutubeHistoryApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Youtube History</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,900" rel="stylesheet">
+	<style type="text/css">
+		[ng\:cloak], [ng-cloak], .ng-cloak {
+			display: none !important;
+		}
+	</style>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="YoutubeHistoryCtrl" ng-cloak>
+	<div id="drop_zone" ng-show="history.length === 0">
+		<p ng-if="!loading">Drop the <b>youtube_activity.json</b> file here</p>
+	</div>
+	<div ng-show="history.length > 0">
+		<div id="search_box">
+			<span>Matching {{results.length}} entries</span>
+			<input type="text" placeholder="Search"
+				   ng-model="query" ng-model-options="{debounce: 250}">
+		</div>
+		<div id="content">
+			<a ng-repeat="video in results = (history | filter:query) | limitTo:30"
+			   ng-href="{{video.url}}" class="video" target="_blank">
+			   	<div class="thumbnail">
+					<img src="//i.ytimg.com/vi/{{video.id}}/hqdefault.jpg">
+			   	</div>
+				<span class="title">{{video.title}}</span>
+				<span class="channel">{{video.channel}}</span>
+				<span class="date">{{sinceDate(video.date)}}</span>
+			</a>
+		</div>
+	</div>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
