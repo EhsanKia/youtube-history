@@ -2,6 +2,9 @@
 <html lang="en" ng-app="YoutubeHistoryApp">
 <head>
 	<meta charset="UTF-8">
+	<meta name="description" content="Simple WebApp for searching your entire Youtube History.">
+	<meta name="keywords" content="YouTube,history,filter,search,browse,watched">
+	<meta name="author" content="Ehsan Kia">
 	<title>Youtube History</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,900" rel="stylesheet">
 	<style type="text/css">
@@ -13,7 +16,7 @@
 </head>
 <body ng-controller="YoutubeHistoryCtrl" ng-cloak>
 	<div id="drop_zone" ng-show="history.length === 0">
-		<p ng-if="!loading">Drop the <b>youtube_activity.json</b> file here</p>
+		<p ng-if="!loading">Drop your <b>MyActivity.json</b> file here</p>
 	</div>
 	<div ng-show="history.length > 0">
 		<div id="search_box">
