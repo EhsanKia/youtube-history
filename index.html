@@ -35,7 +35,9 @@
 				<span class="channel">
 					<a href="{{video.channelUrl}}" target="_blank">{{video.channel}}</a>
 				</span>
-				<span class="date">{{sinceDate(video.date)}}</span>
+				<span class="date" title="{{date(video.date)}}">
+					Watched {{date(video.date).from()}}
+				</span>
 			</div>
 		</div>
 	</div>

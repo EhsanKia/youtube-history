@@ -1,7 +1,7 @@
 angular
 .module('YoutubeHistoryApp', [])
 .controller('YoutubeHistoryCtrl', ['$scope', '$element', ($scope, $element) => {
-	$scope.sinceDate = (date) => moment(date).from();
+	$scope.date = moment;
 	$scope.history = [];
 	$scope.query = '';
 
