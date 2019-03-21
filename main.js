@@ -16,17 +16,20 @@ angular
 		const reader = new FileReader();
 		reader.onload = (e) => {
 			const data = JSON.parse(e.target.result);
-			$scope.history = parseYoutubeHistory(data);
+			$scope.history = parseHistory(data);
 			$scope.$apply();
 		};
 		reader.readAsText(event.dataTransfer.files[0]);
 	});
 }]);
 
-function parseYoutubeHistory(data) {
+function parseHistory(data) {
 	return data.flatMap((event) => {
+		if (event.header.toLowerCase() !== 'youtube') {
+			return [];  // Not a Youtube event.
+		}
 		if (!event.title.startsWith('Watched ')) {
-			return [];  // Not a watch event.
+			return [];  // Not a video watch event.
 		}
 		if (!event.titleUrl || !event.subtitles) {
 			return []; // Video deleted, private, or a story.
@@ -36,6 +39,7 @@ function parseYoutubeHistory(data) {
 			'url': event.titleUrl,
 			'id': event.titleUrl.split('=')[1],
 			'channel': event.subtitles[0].name,
+			'channelUrl': event.subtitles[0].url,
 			'date': event.time,
 		};
 	});

@@ -79,7 +79,7 @@ body {
 }
 
 .video:hover {
-	filter: brightness(0.7);
+	filter: brightness(0.8);
 }
 
 .video .thumbnail {
@@ -116,4 +116,13 @@ body {
 	color: rgb(170, 170, 170);
 	font-size: 13px;
 	line-height: 18px;
+}
+
+.video .channel a {
+	color: rgb(170, 170, 170);
+	text-decoration: none;
+}
+
+.video .channel a:hover {
+	color: #ffffffbd;
 }

@@ -25,15 +25,18 @@
 				   ng-model="query" ng-model-options="{debounce: 250}">
 		</div>
 		<div id="content">
-			<a ng-repeat="video in results = (history | filter:query) | limitTo:30"
-			   ng-href="{{video.url}}" class="video" target="_blank">
-			   	<div class="thumbnail">
-					<img src="//i.ytimg.com/vi/{{video.id}}/hqdefault.jpg">
-			   	</div>
-				<span class="title">{{video.title}}</span>
-				<span class="channel">{{video.channel}}</span>
+			<div ng-repeat="video in results = (history | filter:query) | limitTo:30" class="video">
+			   <a ng-href="{{video.url}}" target="_blank">
+				   	<div class="thumbnail">
+						<img ng-src="//i.ytimg.com/vi/{{video.id}}/hqdefault.jpg">
+				   	</div>
+					<span class="title">{{video.title}}</span>
+				</a>
+				<span class="channel">
+					<a href="{{video.channelUrl}}" target="_blank">{{video.channel}}</a>
+				</span>
 				<span class="date">{{sinceDate(video.date)}}</span>
-			</a>
+			</div>
 		</div>
 	</div>
 
