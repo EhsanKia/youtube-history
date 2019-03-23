@@ -18,13 +18,13 @@
 	<div id="drop_zone" ng-show="history.length === 0">
 		<p ng-if="!loading">Drop your <b>MyActivity.json</b> file here</p>
 	</div>
-	<div ng-show="history.length > 0">
+	<div id="content" ng-show="history.length > 0">
 		<div id="search_box">
 			<span>Matching {{results.length}} entries</span>
 			<input type="text" placeholder="Search"
 				   ng-model="query" ng-model-options="{debounce: 250}">
 		</div>
-		<div id="content">
+		<div id="history">
 			<div ng-repeat="video in results = (history | filter:query) | limitTo:30" class="video">
 			   <a ng-href="{{video.url}}" target="_blank">
 				   	<div class="thumbnail">
@@ -40,6 +40,7 @@
 				</span>
 			</div>
 		</div>
+		<button class="clear" ng-click="clearHistory()">Clear local storage</button>
 	</div>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>

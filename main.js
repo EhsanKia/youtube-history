@@ -2,7 +2,7 @@ angular
 .module('YoutubeHistoryApp', [])
 .controller('YoutubeHistoryCtrl', ['$scope', '$element', ($scope, $element) => {
 	$scope.date = moment;
-	$scope.history = [];
+	$scope.history = loadHistory();
 	$scope.query = '';
 
 	// Set file drop event listeners
@@ -17,10 +17,16 @@ angular
 		reader.onload = (e) => {
 			const data = JSON.parse(e.target.result);
 			$scope.history = parseHistory(data);
+			saveHistory($scope.history);
 			$scope.$apply();
 		};
 		reader.readAsText(event.dataTransfer.files[0]);
 	});
+
+	$scope.clearHistory = () => {
+		delete window.localStorage.youtubeHistory;
+		$scope.history = [];
+	}
 }]);
 
 function parseHistory(data) {
@@ -43,4 +49,32 @@ function parseHistory(data) {
 			'date': event.time,
 		};
 	});
+}
+
+function saveHistory(history) {
+	const storage = history.map((video) => {
+		return [
+			video.title,
+			video.id,
+			video.channel,
+			video.channelUrl.split('/').pop(),
+			video.date,
+		];
+	});
+	window.localStorage.youtubeHistory = JSON.stringify(storage);
+}
+
+function loadHistory() {
+	if (!window.localStorage.youtubeHistory) return [];
+	const storage = JSON.parse(window.localStorage.youtubeHistory);
+	return storage.map((item) => {
+		return {
+			'title': item[0],
+			'url': `https://www.youtube.com/watch?v=${item[1]}`,
+			'id': item[1],
+			'channel': item[2],
+			'channelUrl': `https://www.youtube.com/channel/${item[3]}`,
+			'date': item[4],
+		};
+	})
 }
